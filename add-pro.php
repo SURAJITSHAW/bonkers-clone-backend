@@ -176,6 +176,7 @@ if (isset($_POST["submit"])) {
                     <p>Subcategory</p>
                     <select id="subcategory" name="sub_category_id" required disabled>
                         <option value="" selected disabled>Select a category first</option>
+                        <option value="0">No subcategories available</option>
                     </select>
 
 
@@ -202,11 +203,16 @@ if (isset($_POST["submit"])) {
                         fetch('get_subcategories.php?category_id=' + selectedCategoryID)
                             .then(response => response.json())
                             .then(data => {
-                                // Populate the subcategory select with the fetched subcategories
-                                subcategorySelect.innerHTML = '<option value="" selected disabled>Select a subcategory</option>';
-                                data.forEach(subcategory => {
-                                    subcategorySelect.innerHTML += `<option value="${subcategory.id}">${subcategory.name}</option>`;
-                                });
+                                // Check if there are no subcategories
+                                if (data.length === 0) {
+                                    subcategorySelect.innerHTML = '<option value="0">No subcategories available</option>';
+                                } else {
+                                    // Populate the subcategory select with the fetched subcategories
+                                    subcategorySelect.innerHTML = '<option value="" selected disabled>Select a subcategory</option>';
+                                    data.forEach(subcategory => {
+                                        subcategorySelect.innerHTML += `<option value="${subcategory.id}">${subcategory.name}</option>`;
+                                    });
+                                }
 
                                 // Enable the subcategory select
                                 subcategorySelect.disabled = false;

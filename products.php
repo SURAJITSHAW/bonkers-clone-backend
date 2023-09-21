@@ -129,18 +129,21 @@ if (isset($_POST["delete"])) {
 
                                         <td><?php echo $row['category_name']; ?></td>
                                         <?php
-                                            $sql1 = "SELECT * FROM subcategory WHERE id={$row['sub_category_id']}";
+                                        $sql1 = "SELECT * FROM subcategory WHERE id={$row['sub_category_id']}";
 
 
-                                            $result1 = mysqli_query($conn, $sql1) or die("Query Unsuccessful.");
+                                        $result1 = mysqli_query($conn, $sql1) or die("Query Unsuccessful.");
+                                        if (mysqli_num_rows($result1) > 0) {
                                             while ($row1 = mysqli_fetch_assoc($result1)) {
                                         ?>
 
-                                        <td><?php echo $row1['name']; ?></td>
+                                                <td><?php echo $row1['name']; ?></td>
 
                                         <?php
-
                                             }
+                                        } else  {
+                                            echo '<td>N/A</td>';
+                                        }
                                         ?>
 
                                         <td><?php echo $row['p_desc']; ?></td>
@@ -158,8 +161,8 @@ if (isset($_POST["delete"])) {
                                         </td>
                                     </tr>
                                 <?php
-                            $i++;    
-                            }
+                                    $i++;
+                                }
 
 
                                 ?>
