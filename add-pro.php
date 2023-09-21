@@ -156,7 +156,7 @@ if (isset($_POST["submit"])) {
                     <textarea rows="7" name="p_desc" required></textarea>
 
                     <p>Category</p>
-                    <select name="category_id" required>
+                    <select id="category_id" name="category_id" required>
                         <option value="" selected disabled>Select Category</option>
                         <?php
                         include 'config.php';
@@ -172,11 +172,50 @@ if (isset($_POST["submit"])) {
                     </select>
 
 
+                    <p>Subcategory</p>
+                    <select id="subcategory" name="sub_category_id" required disabled>
+                        <option value="" selected disabled>Select a category first</option>
+                    </select>
 
 
 
                     <p><input required class="submit btn btn-success" name="submit" type="submit" value="Add Product" /></p>
                 </form>
+
+                <script>
+                    // Get references to the category and subcategory select elements
+                    const categorySelect = document.getElementById('category_id'); // Adjust the ID as needed
+                    const subcategorySelect = document.getElementById('subcategory');
+
+                    // Add an event listener to the category select element
+                    categorySelect.addEventListener('change', () => {
+                        const selectedCategoryID = categorySelect.value;
+
+                        // Disable the subcategory select while loading data
+                        subcategorySelect.disabled = true;
+
+                        // Clear existing subcategory options
+                        subcategorySelect.innerHTML = '<option value="" selected disabled>Loading subcategories...</option>';
+
+                        // Make an AJAX request to fetch subcategories based on the selected category
+                        fetch('get_subcategories.php?category_id=' + selectedCategoryID)
+                            .then(response => response.json())
+                            .then(data => {
+                                // Populate the subcategory select with the fetched subcategories
+                                subcategorySelect.innerHTML = '<option value="" selected disabled>Select a subcategory</option>';
+                                data.forEach(subcategory => {
+                                    subcategorySelect.innerHTML += `<option value="${subcategory.id}">${subcategory.name}</option>`;
+                                });
+
+                                // Enable the subcategory select
+                                subcategorySelect.disabled = false;
+                            })
+                            .catch(error => {
+                                console.error('Error fetching subcategories:', error);
+                                subcategorySelect.innerHTML = '<option value="" selected disabled>Error loading subcategories</option>';
+                            });
+                    });
+                </script>
 
 
 
