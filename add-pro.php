@@ -14,9 +14,10 @@ if (isset($_POST["submit"])) {
     $img = mysqli_real_escape_string($conn, $_FILES["p_img"]["name"]);
     $desc = mysqli_real_escape_string($conn, $_POST["p_desc"]);
     $category = mysqli_real_escape_string($conn, $_POST["category_id"]);
+    $subcategory = mysqli_real_escape_string($conn, $_POST["sub_category_id"]);
 
     // Add single quotes around values in the SQL query
-    $sql = "INSERT INTO product(p_name, p_price,p_img, p_desc, category_id) VALUES ('$name', '$price', '$img', '$desc', '$category')";
+    $sql = "INSERT INTO product(p_name, p_price,p_img, p_desc, category_id, sub_category_id) VALUES ('$name', '$price', '$img', '$desc', '$category', '$subcategory')";
 
     $result = mysqli_query($conn, $sql) or die("Query Unsuccessful.");
 

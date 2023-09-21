@@ -12,6 +12,7 @@ if (isset($_POST["edit"])) {
     $price = $_POST["p_price"];
     $desc = $_POST["p_desc"];
     $category = $_POST["category_id"];
+    $subcategory = $_POST["sub_category_id"];
 
     $img_new = $_FILES["p_img"]["name"];
     $img_old = $_POST["img_old"];
@@ -24,7 +25,7 @@ if (isset($_POST["edit"])) {
     }
 
     // Update
-    $sql1 = "UPDATE product SET p_name='$name', p_price='$price',p_img='$update_file', category_id='$category', p_desc='$desc' WHERE p_id='$id'";
+    $sql1 = "UPDATE product SET p_name='$name', p_price='$price',p_img='$update_file', category_id='$category', sub_category_id='$subcategory', p_desc='$desc' WHERE p_id='$id'";
 
     $result1 = mysqli_query($conn, $sql1) or die("Query Unsuccessful.");
 
@@ -202,8 +203,8 @@ if (isset($_POST["edit"])) {
                                 <?php
                                 
 
-                                $sql = "SELECT * FROM category";
-                                $result1 = mysqli_query($conn, $sql) or die("Query Unsuccessful.");
+                                $sql1 = "SELECT * FROM category";
+                                $result1 = mysqli_query($conn, $sql1) or die("Query Unsuccessful.");
 
                                 while ($row1 = mysqli_fetch_assoc($result1)) {
                                     if ($row['category_id'] == $row1['category_id']) {
@@ -213,6 +214,26 @@ if (isset($_POST["edit"])) {
                                     }
 
                                     echo "<option {$select} value={$row1['category_id']}>{$row1['category_name']}</option>";
+                                } ?>
+                            </select>
+
+                            <p>Sub Category</p>
+                            <select name="sub_category_id" required>
+
+                                <?php
+                                
+
+                                $sql2 = "SELECT * FROM subcategory WHERE category_id ={$row['category_id']}";
+                                $result2 = mysqli_query($conn, $sql2) or die("Query Unsuccessful.");
+
+                                while ($row2 = mysqli_fetch_assoc($result2)) {
+                                    if ($row['sub_category_id'] == $row2['id']) {
+                                        $select = "selected";
+                                    } else {
+                                        $select = "";
+                                    }
+
+                                    echo "<option {$select} value={$row2['id']}>{$row2['name']}</option>";
                                 } ?>
                             </select>
 

@@ -107,6 +107,7 @@ if (isset($_POST["delete"])) {
                                     <th>Price</th>
                                     <th>Image</th>
                                     <th>Category Name</th>
+                                    <th>Sub Category Name</th>
                                     <th>Description</th>
                                     <th>Edit</th>
                                     <th>Delete</th>
@@ -127,6 +128,20 @@ if (isset($_POST["delete"])) {
                                         <td><img src="<?php echo "uploads/" . $row['p_img']; ?>" alt="" height="200px" width="200px" style="object-fit: contain;"></td>
 
                                         <td><?php echo $row['category_name']; ?></td>
+                                        <?php
+                                            $sql1 = "SELECT * FROM subcategory WHERE id={$row['sub_category_id']}";
+
+
+                                            $result1 = mysqli_query($conn, $sql1) or die("Query Unsuccessful.");
+                                            while ($row1 = mysqli_fetch_assoc($result1)) {
+                                        ?>
+
+                                        <td><?php echo $row1['name']; ?></td>
+
+                                        <?php
+
+                                            }
+                                        ?>
 
                                         <td><?php echo $row['p_desc']; ?></td>
 
