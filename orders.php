@@ -5,6 +5,25 @@ if (!isset($_SESSION['loggedin_admin']) || $_SESSION['loggedin_admin'] != true) 
     exit;
 }
 
+include "config.php";
+
+if (isset($_POST["delete"])) {
+    $id = mysqli_real_escape_string($conn, $_POST["del_id"]);
+
+    $sql = "DELETE FROM category WHERE category_id='$id'";
+
+    $result = mysqli_query($conn, $sql) or die("Query Unsuccessful.");
+
+    if ($result) {
+        $_SESSION['status'] = "Product Deleted Successfully.";
+        header('Location: category.php');
+    } else {
+        $_SESSION['status'] = "Product Deletion Failed!";
+        header('Location: category.php');
+    }
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +36,7 @@ if (!isset($_SESSION['loggedin_admin']) || $_SESSION['loggedin_admin'] != true) 
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Ecommerce</title>
+    <title>Bonkers</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -48,7 +67,74 @@ if (!isset($_SESSION['loggedin_admin']) || $_SESSION['loggedin_admin'] != true) 
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <?php include "dashboard.php" ?>
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <!-- <a href="add-cat.php" style="float:right;" type="submit" name="Add" class="btn btn-success">Add Category</a> -->
+                    <h1 class="h3 mb-4 text-gray-800">List Orders</h1>
+
+
+                    <?php
+                    include 'config.php';
+
+                    $sql = "select * from orders as o join users as u on o.user_id = u.user_id";
+                    $result = mysqli_query($conn, $sql) or die("Query Unsuccessful.");
+
+                    if (mysqli_num_rows($result) > 0) {
+                    ?>
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Order Id</th>
+                                    <th>User Email</th>
+                                    <th>Amount</th>
+                                    <th>Payment ID</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $i = 1;
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                ?>
+                                    <tr>
+                                        <td><?php echo $i; ?></td>
+                                        <td><?php echo $row['order_id']; ?></td>
+                                        <td><?php echo $row['email']; ?></td>
+                                        <td><?php
+                                            $formattedValue = number_format($row['amount'] / 100, 2);
+                                            echo $formattedValue; ?></td>
+                                        <td><?php echo $row['payment_id']; ?></td>
+
+                                        <td><a href="edit-order.php?id=<?php echo $row['order_id']; ?>" class="btn btn-info">Edit</a></td>
+                                        <td>
+                                            <!-- Delete product -->
+                                            <form action="" method="post">
+                                                <input type="hidden" name="del_id" value="<?php echo $row['order_id']; ?>">
+                                                <button type="submit" name="delete" class="btn btn-danger">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+
+                                <?php
+                                    $i++;
+                                }
+
+
+
+                                ?>
+                            </tbody>
+                        </table>
+
+                    <?php } else {
+
+                        echo "<tr><td> No Record Found</td></tr>";
+                    } ?>
+
+                </div>
                 <!-- /.container-fluid -->
 
             </div>

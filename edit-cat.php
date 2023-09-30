@@ -25,7 +25,7 @@ if (isset($_POST["submit"])) {
 
 <?php
 session_start();
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
+if (!isset($_SESSION['loggedin_admin']) || $_SESSION['loggedin_admin'] != true) {
     header('location: login.php');
     exit;
 }
@@ -140,7 +140,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
 
                 <?php
 
-                
+
                 include 'config.php';
 
                 $sql = "SELECT * FROM category WHERE category_id = '$id'";

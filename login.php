@@ -3,31 +3,30 @@
 $login = false;
 $showError = false;
 
-if (isset($_POST['login'])) {
+if (isset($_POST['login_admin'])) {
     include "config.php";
-    $email = $_POST['email'];
-    $pass = $_POST['pass'];
+    $email_admin = $_POST['email_admin'];
+    $pass_admin = $_POST['pass_admin'];
 
 
-    $sql = "SELECT * FROM users WHERE email='$email'";
+    $sql = "SELECT * FROM admin WHERE email_admin='$email_admin'";
     $result = mysqli_query($conn, $sql);
 
 
     if (mysqli_num_rows($result) == 1) {
 
-        while( $row = mysqli_fetch_array($result)) {
+        while ($row = mysqli_fetch_array($result)) {
 
-           
-            if( $row['pass'] == $pass){
+
+            if ($row['pass_admin'] == $pass_admin) {
                 $login = true;
                 session_start();
-                $_SESSION['loggedin'] = true;
+                $_SESSION['loggedin_admin'] = true;
                 header('location: index.php');
             } else {
                 $showError = "Invalid credentials";
             }
         }
-        
     } else {
         $showError = "Invalid credentials";
     }
@@ -56,7 +55,7 @@ if (isset($_POST['login'])) {
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <style>
-        
+
     </style>
 
 </head>
@@ -91,27 +90,27 @@ if (isset($_POST['login'])) {
                     <div class="card-body p-3">
                         <!-- Nested Row within Card Body -->
                         <!-- <div class="row"> -->
-                            <!-- <div class="col-lg-6 d-none d-lg-block bg-login-image"></div> -->
-                            <div class="col-lg-12">
-                                <div class="p-5">
-                                    <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Welcome to Bonkers</h1>
-                                    </div>
-                                    <form method="post" action="" class="user">
-                                        <div class="form-group">
-                                            <input name="email" type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
-                                        </div>
-                                        <div class="form-group">
-                                            <input name="pass" type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
-                                        </div>
-
-                                        <button type="submit" name="login" class="btn btn-primary btn-user btn-block">
-                                            Login
-                                        </button>
-                                    </form>
-
+                        <!-- <div class="col-lg-6 d-none d-lg-block bg-login-image"></div> -->
+                        <div class="col-lg-12">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">Welcome to Bonkers</h1>
                                 </div>
+                                <form method="post" action="" class="user">
+                                    <div class="form-group">
+                                        <input name="email_admin" type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                                    </div>
+                                    <div class="form-group">
+                                        <input name="pass_admin" type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                                    </div>
+
+                                    <button type="submit" name="login_admin" class="btn btn-primary btn-user btn-block">
+                                        Login
+                                    </button>
+                                </form>
+
                             </div>
+                        </div>
                         <!-- </div> -->
                     </div>
                 </div>

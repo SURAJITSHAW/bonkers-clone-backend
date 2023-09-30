@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
+if (!isset($_SESSION['loggedin_admin']) || $_SESSION['loggedin_admin'] != true) {
     header('location: login.php');
     exit;
 }
@@ -106,7 +106,7 @@ if (isset($_POST["delete"])) {
                             </thead>
                             <tbody>
                                 <?php
-                                    $i=1;
+                                $i = 1;
                                 while ($row = mysqli_fetch_assoc($result)) {
                                 ?>
                                     <tr>
@@ -123,8 +123,8 @@ if (isset($_POST["delete"])) {
                                         </td>
                                     </tr>
 
-                                <?php 
-                                $i++;
+                                <?php
+                                    $i++;
                                 }
 
 

@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
+if (!isset($_SESSION['loggedin_admin']) || $_SESSION['loggedin_admin'] != true) {
     header('location: login.php');
     exit;
 }
@@ -201,7 +201,7 @@ if (isset($_POST["edit"])) {
                             <select name="category_id" required>
 
                                 <?php
-                                
+
 
                                 $sql1 = "SELECT * FROM category";
                                 $result1 = mysqli_query($conn, $sql1) or die("Query Unsuccessful.");
@@ -221,7 +221,7 @@ if (isset($_POST["edit"])) {
                             <select name="sub_category_id" required>
 
                                 <?php
-                                
+
 
                                 $sql2 = "SELECT * FROM subcategory WHERE category_id ={$row['category_id']}";
                                 $result2 = mysqli_query($conn, $sql2) or die("Query Unsuccessful.");
@@ -243,7 +243,7 @@ if (isset($_POST["edit"])) {
                             <p><input required class="submit btn btn-success" name="edit" type="submit" value="Edit" /></p>
                         </form>
                 <?php
-                $i++;
+                        $i++;
                     }
                 } else {
                     echo "No products available";

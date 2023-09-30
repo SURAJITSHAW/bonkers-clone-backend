@@ -1,8 +1,8 @@
 <?php
-if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+if (isset($_SESSION['loggedin_admin']) && $_SESSION['loggedin_admin'] == true) {
     $loggedin = true;
 } else {
-    
+
     $loggedin = false;
 }
 ?>
@@ -10,13 +10,13 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
 
 
     <div class="mr-auto">
-        
-        <?php 
 
-            if($loggedin) {
-                echo '<a href="logout.php" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm mr-2"><i class="fas fa-sign-out-alt fa-sm text-white-50"></i>
+        <?php
+
+        if ($loggedin) {
+            echo '<a href="logout.php" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm mr-2"><i class="fas fa-sign-out-alt fa-sm text-white-50"></i>
             Logout</a>';
-            }
+        }
         ?>
     </div>
 

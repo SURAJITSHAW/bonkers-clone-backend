@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
+if (!isset($_SESSION['loggedin_admin']) || $_SESSION['loggedin_admin'] != true) {
     header('location: login.php');
     exit;
 }
@@ -141,7 +141,7 @@ if (isset($_POST["delete"])) {
 
                                         <?php
                                             }
-                                        } else  {
+                                        } else {
                                             echo '<td>N/A</td>';
                                         }
                                         ?>

@@ -24,7 +24,7 @@ if (isset($_POST["submit"])) {
 
 <?php
 session_start();
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
+if (!isset($_SESSION['loggedin_admin']) || $_SESSION['loggedin_admin'] != true) {
     header('location: login.php');
     exit;
 }
@@ -138,7 +138,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
                 <!-- /.container-fluid -->
 
 
-                <form class="post-form" action="" method="post" >
+                <form class="post-form" action="" method="post">
 
 
                     <p>Category Name</p>
