@@ -1,2 +1,1 @@
-Category: id, name, slug, date
-Sub-Category: sub-id, cat-id, name, slug, date
+This is the backend for bonkers-clone(frontend).
